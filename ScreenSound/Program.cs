@@ -125,23 +125,7 @@ void AvaliarUmaBanda()
     else
     {
         Console.WriteLine($"Banda {nomeDaBanda} não registrada ou digitada incorretamente");
-        Console.WriteLine("Deseja tentar novamente ou voltar ao menu?");
-        Console.WriteLine("1 - Tentar novamente");
-        Console.WriteLine("2 - Voltar ao menu");
-
-        string opcaoEscolhida = Console.ReadLine()!;
-        int opcaoEscolhidaNumerica = int.Parse(opcaoEscolhida);
-
-        switch (opcaoEscolhidaNumerica)
-        {
-            case 1:
-                AvaliarUmaBanda();
-                break;
-            case 2:
-                Console.Clear();
-                ExibirOpcoesDoMenu();
-                break;
-        }
+        tentarNovamente();
 
 
     }
@@ -165,34 +149,57 @@ void ExibirMediaDaBanda()
 
     Console.Clear();
     ExibirTituloDaOpcao("Média de notas de uma banda");
-    Console.Write("Digite a banda que deseja verificar a média: ");
+    Console.Write("Digite a banda que deseja verificar a média:");
     String nomeDaBanda = Console.ReadLine()!;
     if (bandasRegistradas.ContainsKey(nomeDaBanda))
     {
+        List<int> notas = bandasRegistradas[nomeDaBanda]; //focar em lembrar de como puxar lista para uma função
+        if (notas.Count > 0)
+        {
+            double media = notas.Average(); // Calcula a média das notas
+            Console.WriteLine($"\nA média das notas da banda {nomeDaBanda} é: {media}");
+            Thread.Sleep(3000);
+            Console.Clear();
+            ExibirOpcoesDoMenu();
+        }
+        else
+        {
+            Console.WriteLine($"A banda {nomeDaBanda} não possui notas registradas.");
+            tentarNovamente();
+        }
+        
 
     }
     else
     {
         Console.WriteLine($"Banda {nomeDaBanda} não registrada ou digitada incorretamente");
-        Console.WriteLine("Deseja tentar novamente ou voltar ao menu?");
-        Console.WriteLine("1 - Tentar novamente");
-        Console.WriteLine("2 - Voltar ao menu");
-
-        string opcaoEscolhida = Console.ReadLine()!;
-        int opcaoEscolhidaNumerica = int.Parse(opcaoEscolhida);
-
-        switch (opcaoEscolhidaNumerica)
-        {
-            case 1: 
-                ExibirMediaDaBanda();
-                break;
-            case 2: 
-                Console.Clear();
-                ExibirOpcoesDoMenu();
-                break;
-        }
+        tentarNovamente();
         
 
+    }
+}
+void tentarNovamente()
+{
+    Console.WriteLine("Deseja tentar novamente ou voltar ao menu?\n");
+    Console.WriteLine("1 - Tentar novamente");
+    Console.WriteLine("2 - Voltar ao menu");
+    Console.WriteLine("3 - Sair do programa\n");
+
+    string opcaoEscolhida = Console.ReadLine()!;
+    int opcaoEscolhidaNumerica = int.Parse(opcaoEscolhida);
+
+    switch (opcaoEscolhidaNumerica)
+    {
+        case 1:
+            ExibirMediaDaBanda();
+            break;
+        case 2:
+            Console.Clear();
+            ExibirOpcoesDoMenu();
+            break;
+        case 3:
+            Console.WriteLine("Até a próxima!");
+            break;
     }
 }
 Exibirlogo();
